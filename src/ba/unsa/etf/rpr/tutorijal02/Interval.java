@@ -104,6 +104,47 @@ public class Interval {
                 getDaLiJePocetnaTackaUIntervalu() == interval.getDaLiJePocetnaTackaUIntervalu() &&
                 getDaLiJeKrajnjaTackaUIntervalu() == interval.getDaLiJeKrajnjaTackaUIntervalu();
     }
+    public static Interval intersect(Interval interval1, Interval interval) {
+        Interval noviInterval = new Interval();
+        // za pocetnu tacku intervala
+        if(interval1.getPocetnaTacka() > interval.getPocetnaTacka()) {
+            noviInterval.setPocetnaTacka(interval1.getPocetnaTacka());
+            noviInterval.setDaLiJePocetnaTackaUIntervalu(interval1.getDaLiJePocetnaTackaUIntervalu());
+        }
+        else if(interval.getPocetnaTacka() > interval1.getPocetnaTacka()) {
+            noviInterval.setPocetnaTacka(interval.getPocetnaTacka());
+            noviInterval.setDaLiJePocetnaTackaUIntervalu(interval.getDaLiJePocetnaTackaUIntervalu());
+        }
+        else {
+            noviInterval.setPocetnaTacka(interval1.getPocetnaTacka());
+            if(interval1.getDaLiJePocetnaTackaUIntervalu() || interval.getDaLiJePocetnaTackaUIntervalu()) {
+                noviInterval.setDaLiJePocetnaTackaUIntervalu(true);
+            }
+            else { noviInterval.setDaLiJePocetnaTackaUIntervalu(false); }
+        }
+        // sada za krajnju tacku intervala
+        if(interval1.getKrajnjaTacka() < interval.getKrajnjaTacka()) {
+            noviInterval.setKrajnjaTacka(interval1.getKrajnjaTacka());
+            noviInterval.setDaLiJeKrajnjaTackaUIntervalu(interval1.getDaLiJeKrajnjaTackaUIntervalu());
+        }
+        else if(interval.getKrajnjaTacka() < interval1.getKrajnjaTacka()) {
+            noviInterval.setKrajnjaTacka(interval.getKrajnjaTacka());
+            noviInterval.setDaLiJeKrajnjaTackaUIntervalu(interval.getDaLiJeKrajnjaTackaUIntervalu());
+        }
+        else {
+            noviInterval.setKrajnjaTacka(interval1.getKrajnjaTacka());
+            if(interval1.getDaLiJeKrajnjaTackaUIntervalu() || interval.getDaLiJeKrajnjaTackaUIntervalu()) {
+                noviInterval.setDaLiJeKrajnjaTackaUIntervalu(true);
+            }
+            else { noviInterval.setDaLiJeKrajnjaTackaUIntervalu(true); }
+        }
+        return noviInterval;
+    }
 
+    public Interval intersect(Interval interval) {
+        Interval noviInterval = intersect(this,interval);
+        return noviInterval;
+
+    }
 
 }
