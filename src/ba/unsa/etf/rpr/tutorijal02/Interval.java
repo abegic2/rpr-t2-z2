@@ -38,7 +38,7 @@ public class Interval {
         this.krajnjaTacka = krajnjaTacka;
     }
 
-    public boolean isDaLiJePocetnaTackaUIntervalu() {
+    public boolean getDaLiJePocetnaTackaUIntervalu() {
         return daLiJePocetnaTackaUIntervalu;
     }
 
@@ -46,12 +46,63 @@ public class Interval {
         this.daLiJePocetnaTackaUIntervalu = daLiJePocetnaTackaUIntervalu;
     }
 
-    public boolean isDaLiJeKrajnjaTackaUIntervalu() {
+    public boolean getDaLiJeKrajnjaTackaUIntervalu() {
         return daLiJeKrajnjaTackaUIntervalu;
     }
 
     public void setDaLiJeKrajnjaTackaUIntervalu(boolean daLiJeKrajnjaTackaUIntervalu) {
         this.daLiJeKrajnjaTackaUIntervalu = daLiJeKrajnjaTackaUIntervalu;
+    }
+
+    public boolean isNull() {
+        if(getPocetnaTacka() == getKrajnjaTacka()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isIn(double tacka) {
+        if(tacka >= getPocetnaTacka() && tacka <= getKrajnjaTacka()) {
+            if(tacka == getPocetnaTacka()) {
+                if(getDaLiJePocetnaTackaUIntervalu()) { return true; }
+                return false;
+            }
+            if(tacka == getKrajnjaTacka()) {
+                if(getDaLiJeKrajnjaTackaUIntervalu()) { return true; }
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        String string;
+        if(isNull()) {
+            string = "()";
+            return string;
+        }
+        if(getDaLiJePocetnaTackaUIntervalu()) { string = "["; }
+        else { string = "("; }
+        string = string + getPocetnaTacka() + "," + getKrajnjaTacka();
+        if(getDaLiJeKrajnjaTackaUIntervalu()) { string = string + "]"; }
+        else { string = string + ")"; }
+        return string;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == this) {
+            return true;
+        }
+        if(!(o instanceof Interval)) {
+            return false;
+        }
+        Interval interval = (Interval) o;
+        return getPocetnaTacka() == interval.getPocetnaTacka() && getKrajnjaTacka() == interval.getKrajnjaTacka() &&
+                getDaLiJePocetnaTackaUIntervalu() == interval.getDaLiJePocetnaTackaUIntervalu() &&
+                getDaLiJeKrajnjaTackaUIntervalu() == interval.getDaLiJeKrajnjaTackaUIntervalu();
     }
 
 
